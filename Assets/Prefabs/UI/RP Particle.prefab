@@ -173,5 +173,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   lifeSpanMin: 5
   lifeSpanMax: 10
+  velocityMin: 0.1
+  velocityMax: 0.5
+  scaleMin: 0.5
+  scaleMax: 2
   messageFormat: +{0} RP
   number: 0

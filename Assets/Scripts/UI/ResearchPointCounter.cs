@@ -6,7 +6,7 @@ using TMPro;
 
 public class ResearchPointCounter : MonoBehaviour
 {
-    [SerializeField] private GameManager gamemanager;
+    [SerializeField] private ResourceStorage resStor;
     [SerializeField] private string messageFormat = "{0} RP";
     [SerializeField] private int points;
     private TextMeshProUGUI text;
@@ -26,6 +26,6 @@ public class ResearchPointCounter : MonoBehaviour
 
     void ChangeText()
     {
-        text.text = string.Format(messageFormat, gamemanager.ResearchPoints);
+        text.text = string.Format(messageFormat, resStor.ResearchPoints);
     }
 }

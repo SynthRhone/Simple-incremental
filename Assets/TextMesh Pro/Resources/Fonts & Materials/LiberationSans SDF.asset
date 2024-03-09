@@ -25,7 +25,9 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
+    - _FaceDilate: 0
     - _GradientScale: 10
+    - _OutlineSoftness: 0
     - _ScaleRatioA: 0.9
     - _ScaleRatioC: 0.73125
     - _TextureHeight: 1024

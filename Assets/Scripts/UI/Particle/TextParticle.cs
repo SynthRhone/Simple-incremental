@@ -10,22 +10,29 @@ public class TextParticle : MonoBehaviour
     [SerializeField] private AnimationCurve transparencyCurve;
     [SerializeField] private float lifeSpanMin = 2.0f;
     [SerializeField] private float lifeSpanMax = 5.0f;
+
+    [SerializeField] private float velocityMin = 0.05f;
+    [SerializeField] private float velocityMax = 1.0f;
+
+    [SerializeField] private float scaleMin = 0.3f;
+    [SerializeField] private float scaleMax = 2.0f;
+
     [SerializeField] private string messageFormat = "+{0} Points";
-    private float lifespan, lifespanMult;
+    //lifespan mult is used to calculate transparency
+    private float lifespan, lifespanMult, velocity, scale;
     //value is passed in for text editing
     public float number;
-    //public float x, y;
     private TextMeshProUGUI text;
-    //private Transform transform;
     // Start is called before the first frame update
     void Start()
     {
         text = gameObject.GetComponent<TextMeshProUGUI>();
-        //transform = gameObject.GetComponent<Transform>();
-        //transform.position = new Vector3(x, y, 0);
         lifespan = Random.Range(lifeSpanMin, lifeSpanMax);
+        velocity = Random.Range(velocityMin, velocityMax);
+        scale = Random.Range(scaleMin, scaleMax);
         lifespanMult = 1.0f / lifespan;
         text.text = string.Format(messageFormat,number);
+        transform.localScale = new Vector3(scale, scale, scale);
     }
 
     // Update is called once per frame
@@ -35,9 +42,8 @@ public class TextParticle : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        transform.Translate(0,0.1f,0);
+        transform.Translate(0,velocity,0);
         lifespan -= Time.deltaTime;
-        //Debug.Log(getTransparency());
         text.color = new Color(1.0f, 1.0f, 1.0f, getTransparency()) ;
     }
 

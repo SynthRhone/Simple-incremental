@@ -173,5 +173,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   lifeSpanMin: 5
   lifeSpanMax: 10
+  velocityMin: 0.1
+  velocityMax: 0.9
+  scaleMin: 0.25
+  scaleMax: 1.5
   messageFormat: +{0} Points
   number: 0

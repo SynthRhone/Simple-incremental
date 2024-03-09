@@ -8,7 +8,8 @@ using TMPro;
 public class UpgradeButton : MonoBehaviour
 {
     [SerializeField] private AnimationCurve upgradeCostCurve;
-    [SerializeField] private GameManager gamemanager;
+    [SerializeField] private ResourceStorage resStor;
+    [SerializeField] private ButtonManager buttMan;
     [SerializeField] public float baseCost = 1;
     private MathHelper mathhelper;
     private float costCurvePosition;
@@ -19,7 +20,7 @@ public class UpgradeButton : MonoBehaviour
     {
         text = gameObject.GetComponentInChildren<TextMeshProUGUI>();
         mathhelper = gameObject.GetComponent<MathHelper>();
-        costCurvePosition = 1.0f / gamemanager.MaxButtonLevel;
+        costCurvePosition = 1.0f / buttMan.MaxButtonLevel;
         updateText();
     }
 
@@ -31,10 +32,10 @@ public class UpgradeButton : MonoBehaviour
 
     public void upgradeButtonPressed()
     {
-        if (gamemanager.CheckSufficientPoints(GetUpgradeCost()))
+        if (resStor.CheckSufficientPoints(GetUpgradeCost()))
         {
-            gamemanager.ChargePoints(GetUpgradeCost());
-            gamemanager.UpgradeButton();
+            resStor.ChargePoints(GetUpgradeCost());
+            buttMan.UpgradeButton();
             updateText();
         }
         else { Debug.Log("Fuck off."); }
@@ -42,7 +43,7 @@ public class UpgradeButton : MonoBehaviour
 
     public float GetUpgradeCost()
     {
-        float output = upgradeCostCurve.Evaluate(gamemanager.ButtonLevel * costCurvePosition);
+        float output = upgradeCostCurve.Evaluate(buttMan.ButtonLevel * costCurvePosition);
         output *= baseCost;
         output = mathhelper.Round(output, 2);
         return output;

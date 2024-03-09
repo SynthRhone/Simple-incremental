@@ -5,14 +5,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+//does not store data about the idle producers, that is held in idle production
 public class PurchaseIdleEarnerButton : MonoBehaviour
 {
     [SerializeField] private AnimationCurve purchaseCostCurve;
-    [SerializeField] private GameManager gamemanager;
+    [SerializeField] private ResourceStorage resStor;
+    [SerializeField] private ButtonManager buttMan;
     [SerializeField] private IdleProduction idleproduction;
     [SerializeField] private int producerID = 0;
-    [SerializeField] private string purchaseButtonText = "Buy item for {0}\nproduces {1}/sec\n({2} owned)";
-    private MathHelper mathhelper;
+    [SerializeField] private string purchaseButtonText = "Buy item for {0:N2}\nproduces {1}/sec\n({2} owned)";
+    //private MathHelper mathhelper;
     private float costCurvePosition;
     private TextMeshProUGUI text;
 
@@ -20,20 +22,21 @@ public class PurchaseIdleEarnerButton : MonoBehaviour
     void Start()
     {
         text = gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        mathhelper = gameObject.GetComponent<MathHelper>();
-        costCurvePosition = 1.0f / gamemanager.MaxButtonLevel;
+        //mathhelper = gameObject.GetComponent<MathHelper>();
+
+        costCurvePosition = 1.0f / buttMan.MaxButtonLevel;
         updateText();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    //// Update is called once per frame
+    //void Update()
+    //{
         
-    }
+    //}
 
     public void purchaseButtonPressed()
     {
-        if (gamemanager.CheckSufficientPoints(idleproduction.GetIdleProducerCost(producerID)))
+        if (resStor.CheckSufficientPoints(idleproduction.GetIdleProducerCost(producerID)))
         {
             idleproduction.PurchaseIdleProducer(producerID);
             updateText();
@@ -44,7 +47,7 @@ public class PurchaseIdleEarnerButton : MonoBehaviour
 
     private void updateText()
     {
-        text.text = string.Format(purchaseButtonText, getIdleProducerData().BaseCost, getIdleProducerData().Production,getIdleProducerData().Owned);
+        text.text = string.Format(purchaseButtonText, idleproduction.GetIdleProducerCost(producerID), getIdleProducerData().Production, getIdleProducerData().Owned);
     }
 
     private IdleProducerData getIdleProducerData()
